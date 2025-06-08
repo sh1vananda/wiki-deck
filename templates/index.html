@@ -23,100 +23,40 @@
             --spacing-unit: 1rem;
         }
 
-        html {
-            box-sizing: border-box;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            text-rendering: optimizeLegibility;
-        }
-        *, *:before, *:after {
-            box-sizing: inherit;
-        }
-        body {
-            margin: 0; padding: 0; width: 100%; height: 100%;
-            font-family: var(--font-primary);
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            overflow: hidden;
-        }
+        html { box-sizing: border-box; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
+        *, *:before, *:after { box-sizing: inherit; }
+        body { margin: 0; padding: 0; width: 100%; height: 100%; font-family: var(--font-primary); background-color: var(--bg-primary); color: var(--text-primary); overflow: hidden; }
 
-        #main-deck {
-            position: relative; width: 100vw; height: 100vh;
-            overflow: hidden;
-        }
-        #slide-and-controls-container, #slide-container {
-            width: 100%; height: 100%;
-        }
+        #main-deck { position: relative; width: 100vw; height: 100vh; overflow: hidden; }
+        #slide-and-controls-container, #slide-container { width: 100%; height: 100%; }
 
-        .slide-content-split {
-            width: 100%; height: 100%; display: flex;
-            flex-direction: column;
-            background-color: var(--bg-secondary);
-        }
-        .image-pane {
-            flex-shrink: 0;
-            width: 100%; height: 40vh; 
-            background-size: cover; background-position: center;
-            box-shadow: inset 0px -10px 15px -10px var(--divider-color);
-        }
-        .text-pane {
-            flex-grow: 1;
-            display: flex; flex-direction: column;
-            justify-content: flex-start;
-            padding: 0;
-            overflow-y: auto;
-        }
+        .slide-content-split { width: 100%; height: 100%; display: flex; flex-direction: column; background-color: var(--bg-secondary); }
+        .image-pane { flex-shrink: 0; width: 100%; height: 40vh; background-size: cover; background-position: center; box-shadow: inset 0px -10px 15px -10px var(--divider-color); }
+        .text-pane { flex-grow: 1; display: flex; flex-direction: column; justify-content: flex-start; padding: 0; overflow-y: auto; }
 
         .text-pane-content {
             padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 1.5);
+            padding-bottom: 90px;
             max-width: 75ch;
-            width: 100%; margin: 0 auto;
+            width: 100%;
+            margin: 0 auto;
         }
-        .text-pane h2 {
-            font-size: 1.8rem;
-            font-weight: 700; margin-top: 0;
-            margin-bottom: calc(var(--spacing-unit) * 0.5);
-            color: var(--text-primary); line-height: 1.2;
-        }
-        .text-pane p {
-            font-size: 1.05rem;
-            line-height: 1.7;
-            margin-bottom: calc(var(--spacing-unit) * 1.5);
-        }
+        .text-pane h2 { font-size: 1.8rem; font-weight: 700; margin-top: 0; margin-bottom: calc(var(--spacing-unit) * 0.5); color: var(--text-primary); line-height: 1.2; }
+        .text-pane p { font-size: 1.05rem; line-height: 1.7; margin-bottom: calc(var(--spacing-unit) * 1.5); }
         .text-pane em { color: var(--text-secondary); font-style: normal; }
         .text-pane a { color: var(--accent-color); text-decoration: none; transition: text-decoration 0.2s ease; }
         .text-pane a:hover { text-decoration: underline; }
 
-        .nav-button {
-            position: absolute; z-index: 100; bottom: 20px;
-            background: rgba(30, 30, 30, 0.5); border: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--text-primary); padding: 12px 24px; border-radius: 50px;
-            cursor: pointer; font-size: 1rem; font-weight: 500;
-            backdrop-filter: blur(8px);
-            transition: all 0.2s ease-out;
-        }
+        .nav-button { position: absolute; z-index: 100; bottom: 20px; background: rgba(30, 30, 30, 0.5); border: 1px solid rgba(255, 255, 255, 0.1); color: var(--text-primary); padding: 12px 24px; border-radius: 50px; cursor: pointer; font-size: 1rem; font-weight: 500; backdrop-filter: blur(8px); transition: all 0.2s ease-out; }
         .nav-button.previous { left: 20px; }
         .nav-button.next { right: 20px; }
-        .nav-button:hover:not(:disabled) {
-            background: rgba(45, 45, 45, 0.7);
-            border-color: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-        }
-        .nav-button:disabled {
-            opacity: 0.4; cursor: not-allowed;
-        }
-
+        .nav-button:hover:not(:disabled) { background: rgba(45, 45, 45, 0.7); border-color: rgba(255, 255, 255, 0.2); transform: translateY(-2px); }
+        .nav-button:disabled { opacity: 0.4; cursor: not-allowed; }
+        
         @media (min-width: 768px) {
-            .slide-content-split {
-                flex-direction: row;
-            }
-            .image-pane {
-                flex: 1; min-width: 50%; height: 100%;
-                box-shadow: inset -10px 0px 15px -10px var(--divider-color);
-            }
-            .text-pane-content {
-                padding: calc(var(--spacing-unit) * 3) calc(var(--spacing-unit) * 4);
-            }
+            .slide-content-split { flex-direction: row; }
+            .image-pane { flex: 1; min-width: 50%; height: 100%; box-shadow: inset -10px 0px 15px -10px var(--divider-color); }
+            .text-pane-content { padding: calc(var(--spacing-unit) * 3) calc(var(--spacing-unit) * 4); padding-bottom: 90px; }
             .text-pane h2 { font-size: 2.5rem; }
             .text-pane p { font-size: 1.1rem; }
             .nav-button.previous { left: 30px; }
@@ -125,32 +65,21 @@
 
         @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
         @keyframes fade-out { from { opacity: 1; } to { opacity: 0; } }
-        
-        #slide-container.htmx-added {
-            animation: fade-in 0.5s ease-in-out;
-        }
-        #main-deck .htmx-swapping #slide-container {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            animation: fade-out 0.5s ease-in-out;
-        }
+        #slide-container.htmx-added { animation: fade-in 0.5s ease-in-out; }
+        #main-deck .htmx-swapping #slide-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; animation: fade-out 0.5s ease-in-out; }
     </style>
 </head>
 <body>
-
     <main id="main-deck">
         <div id="slide-and-controls-container" hx-swap="innerHTML transition:true">
-            
             <div id="slide-container">
                 {% include '_slide.html' %}
             </div>
             <div id="controls-container">
                 {% include '_controls.html' %}
             </div>
-            
         </div>
     </main>
-
     <script src="https://unpkg.com/htmx.org@1.9.12/dist/htmx.min.js"></script>
-
 </body>
 </html>
