@@ -1,0 +1,19 @@
+<div class="slide-content-split">
+    {% if article.thumbnail %}
+    <div class="image-pane"
+         style="background-image: url('{{ article.thumbnail.source }}');">
+    </div>
+    {% endif %}
+
+    <div class="text-pane">
+        <div class="text-pane-content"> 
+            <header>
+                <a href="{{ article.content_urls.desktop.page }}" target="_blank">
+                    <h2>{{ article.title }}</h2>
+                </a>
+            </header>
+            <p><em>{{ article.description or "No description available." }}</em></p>
+            <p>{{ article.extract }}</p>
+        </div>
+    </div>
+</div>

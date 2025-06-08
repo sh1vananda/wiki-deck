@@ -1,0 +1,16 @@
+<button class="nav-button previous"
+        hx-get="/navigate?direction=previous"
+        hx-target="#slide-and-controls-container"
+        hx-swap="innerHTML"
+        hx-trigger="click"
+        {{ 'disabled' if is_first }}>
+    ←
+</button>
+
+<button class="nav-button next"
+        hx-get="/navigate?direction=next"
+        hx-target="#slide-and-controls-container"
+        hx-swap="innerHTML"
+        hx-trigger="click">
+    →
+</button>
