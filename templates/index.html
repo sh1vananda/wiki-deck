@@ -18,114 +18,33 @@
             --bg-secondary: #2a2a2a;
             --text-primary: #e0e0e0;
             --accent-color: #3b82f6;
-            --divider-color: rgba(255, 255, 255, 0.1);
         }
-
         html { box-sizing: border-box; }
         *, *:before, *:after { box-sizing: inherit; }
-        body { margin: 0; font-family: var(--font-primary); background-color: var(--bg-primary); color: var(--text-primary); }
-
-        #main-deck {
-            position: relative;
-            height: 100vh;
-            width: 100vw;
-            overflow: hidden;
-        }
-        
-        #swap-container {
-            width: 100%;
-            height: 100%;
-            position: relative;
-        }
-
-        #slide-container, .slide-content-split {
-            width: 100%;
-            height: 100%;
-        }
-
-        .slide-content-split {
-            display: flex;
-            flex-direction: column;
-            background-color: var(--bg-secondary);
-        }
-        .image-pane {
-            flex-shrink: 0;
-            width: 100%;
-            height: 40vh;
-            background-size: cover;
-            background-position: center;
-        }
-        .text-pane {
-            flex-grow: 1;
-            overflow-y: auto;
-            padding: 1.5rem;
-        }
-        
+        body { margin: 0; font-family: var(--font-primary); background-color: var(--bg-primary); color: var(--text-primary); cursor: pointer; }
+        #main-deck, #swap-container, #slide-container, .slide-content-split { width: 100%; height: 100vh; overflow: hidden; }
+        #main-deck { position: relative; }
+        .slide-content-split { display: flex; flex-direction: column; background-color: var(--bg-secondary); }
+        .image-pane { flex-shrink: 0; width: 100%; height: 40vh; background-size: cover; background-position: center; }
+        .text-pane { flex-grow: 1; overflow-y: auto; padding: 1.5rem; }
         @media (min-width: 768px) {
             .slide-content-split { flex-direction: row; }
             .image-pane { flex: 1; min-width: 50%; height: 100%; }
             .text-pane { width: 50%; padding: 3rem 4rem; }
         }
-
         .text-pane-content h2 { font-size: 1.8rem; margin-top: 0; }
         .text-pane-content p { font-size: 1.05rem; line-height: 1.7; }
-        .text-pane-content a { color: var(--accent-color); text-decoration: none; }
+        .text-pane-content a { color: var(--accent-color); text-decoration: none; pointer-events: all; cursor: pointer; }
+        .text-pane-content a:hover { text-decoration: underline; }
         @media (min-width: 768px) {
             .text-pane-content h2 { font-size: 2.5rem; }
             .text-pane-content p { font-size: 1.1rem; }
         }
-
-        #controls-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-        }
-        .nav-button {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 100;
-            
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 48px; height: 48px;
-            border-radius: 50%;
-            
-            background: rgba(30, 30, 30, 0.5);
-            border: 1px solid var(--divider-color);
-            backdrop-filter: blur(8px);
-            
-            color: var(--text-primary);
-            font-size: 1.5rem;
-            cursor: pointer;
-            pointer-events: all;
-            transition: all 0.2s ease-out;
-        }
-        .nav-button.previous { left: 16px; }
-        .nav-button.next { right: 16px; }
-
-        .nav-button:hover:not(:disabled) {
-            background: rgba(45, 45, 45, 0.7);
-            transform: translateY(-50%) scale(1.1);
-        }
-        .nav-button:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-        }
-
+        #controls-container { display: none; }
         @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
         @keyframes fade-out { from { opacity: 1; } to { opacity: 0; } }
-        
-        #swap-container > .htmx-swapping {
-            animation: fade-out 0.4s ease-in-out forwards;
-        }
-        #swap-container > .htmx-added {
-            animation: fade-in 0.4s ease-in-out;
-        }
+        #swap-container > .htmx-swapping { animation: fade-out 0.4s ease-in-out forwards; }
+        #swap-container > .htmx-added { animation: fade-in 0.4s ease-in-out; }
     </style>
 </head>
 <body>
@@ -137,6 +56,36 @@
     </main>
 
     <script src="https://unpkg.com/htmx.org@1.9.12/dist/htmx.min.js"></script>
+
+    <script>
+        const mainDeck = document.getElementById('main-deck');
+
+        mainDeck.addEventListener('click', function(event) {
+            if (event.target.closest('a')) {
+                return;
+            }
+
+            const clickX = event.clientX;
+            const screenWidth = window.innerWidth;
+
+            if (clickX < screenWidth / 2) {
+                const prevTrigger = document.getElementById('trigger-previous');
+                if (prevTrigger && !prevTrigger.hasAttribute('disabled')) {
+                    console.log("Left half clicked - making direct HTMX request");
+                    htmx.ajax('GET', '/navigate?direction=previous', {
+                        target: '#swap-container',
+                        swap: 'innerHTML'
+                    });
+                }
+            } else {
+                console.log("Right half clicked - making direct HTMX request");
+                htmx.ajax('GET', '/navigate?direction=next', {
+                    target: '#swap-container',
+                    swap: 'innerHTML'
+                });
+            }
+        });
+    </script>
 
 </body>
 </html>
