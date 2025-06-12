@@ -30,7 +30,7 @@ To run this project on your own machine, follow these steps.
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/your-username/your-repo-name.git
+    git clone https://github.com/sh1vananda/wiki-deck.git
     cd your-repo-name
     ```
 
